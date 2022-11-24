@@ -1,5 +1,9 @@
 function Welcome() {
-  return <h1>Welcome</h1>;
+  return (
+    <section>
+      <h1>Welcome</h1>;
+    </section>
+  );
 }
 
 export default Welcome;
