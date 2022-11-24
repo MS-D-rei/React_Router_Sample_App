@@ -1,5 +1,5 @@
 function Welcome() {
-  return (<h1>Welocme</h1>)
+  return <h1>Welocme</h1>;
 }
 
 export default Welcome;
