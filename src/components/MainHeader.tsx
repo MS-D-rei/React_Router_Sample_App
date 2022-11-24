@@ -1,19 +1,28 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
+import { MainHeaderHeader } from '@/components/MainHeaderStyle';
+
+/* https://reactrouter.com/en/main/components/nav-link */
+// A <NavLink> is a special kind of <Link> that knows whether or not it is "active". 
+// By default, an active class is added to a <NavLink> component when it is active
 
 function MainHeader() {
   return (
-    <header>
+    <MainHeaderHeader>
       <nav>
         <ul>
           <li>
-            <Link to='/welcome'>Welcome</Link>
+            <NavLink to="/welcome">
+              Welcome
+            </NavLink>
           </li>
           <li>
-            <Link to="/products">Products</Link>
+            <NavLink to="/products">
+              Products
+            </NavLink>
           </li>
         </ul>
       </nav>
-    </header>
+    </MainHeaderHeader>
   );
 }
 
