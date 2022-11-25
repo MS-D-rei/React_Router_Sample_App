@@ -27,6 +27,15 @@ function QuoteList({ quotes }: QuoteListProps) {
   const queryParams = new URLSearchParams(location.search);
 
   console.log(location);
+  /*
+    {pathname: '/quotes', search: '', hash: '', state: null, key: '69glwf'}
+    hash: ""
+    key: "69glwf"
+    pathname: "/quotes"
+    search: ""
+    state: null
+    [[Prototype]]: Object
+  */
   console.log(queryParams);
 
   const isSortingAscending = queryParams.get('sort') === 'asc';
@@ -35,7 +44,11 @@ function QuoteList({ quotes }: QuoteListProps) {
 
   const changeSortingHandler = () => {
     // after push, this component will be re-evaluated.
-    history.push(`/quotes?sort=${isSortingAscending ? 'desc' : 'asc'}`);
+    // history.push(`${location.pathname}?sort=${isSortingAscending ? 'desc' : 'asc'}`);
+    history.push({
+      pathname: location.pathname,
+      search: `?sort=${isSortingAscending ? 'desc' : 'asc'}`,
+    });
   };
 
   return (
