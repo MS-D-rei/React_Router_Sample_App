@@ -2,6 +2,7 @@ import { Route, useParams } from 'react-router-dom';
 import Comments from '@/components/comments/Comments';
 import { QuoteType } from '@/components/quotes/types';
 import HighlightedQuote from '../quotes/HighlightedQuote';
+import { NotFoundDiv } from './NotFoundStyle';
 
 const DUMMY_QUOTES: QuoteType[] = [
   { id: 'q1', author: 'John', text: 'React is fun' },
@@ -18,7 +19,11 @@ function QuoteDetail() {
   const quote = DUMMY_QUOTES.find((quote) => quote.id === params.quoteId);
 
   if (!quote) {
-    return <p>No Quote Found</p>;
+    return (
+      <NotFoundDiv>
+        <p>No Quote Found</p>
+      </NotFoundDiv>
+    );
   }
 
   return (
