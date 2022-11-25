@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const QuoteItemLi = styled.li`
@@ -38,7 +39,7 @@ export const QuoteItemLi = styled.li`
   }
 `;
 
-export const QuoteItemA = styled.a`
+export const QuoteItemLink = styled(Link)`
   text-decoration: none;
   background-color: teal;
   color: white;

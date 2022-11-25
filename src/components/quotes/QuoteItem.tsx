@@ -1,4 +1,4 @@
-import { QuoteItemA, QuoteItemLi } from '@/components/quotes/QuoteItemStyle';
+import { QuoteItemLink, QuoteItemLi } from '@/components/quotes/QuoteItemStyle';
 
 interface QuoteItemProps {
   id: string;
@@ -6,7 +6,7 @@ interface QuoteItemProps {
   text: string;
 }
 
-function QuoteITem({ author, text }: QuoteItemProps) {
+function QuoteITem({ id, author, text }: QuoteItemProps) {
   return (
     <QuoteItemLi>
       <figure>
@@ -15,7 +15,7 @@ function QuoteITem({ author, text }: QuoteItemProps) {
         </blockquote>
         <figcaption>{author}</figcaption>
       </figure>
-      <QuoteItemA>View Fullscreen</QuoteItemA>
+      <QuoteItemLink to={`/quotes/${id}`}>View Fullscreen</QuoteItemLink>
     </QuoteItemLi>
   );
 }
