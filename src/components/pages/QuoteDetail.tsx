@@ -1,8 +1,9 @@
-import { Route, useParams } from 'react-router-dom';
+import { Link, Route, useParams } from 'react-router-dom';
 import Comments from '@/components/comments/Comments';
 import { QuoteType } from '@/components/quotes/types';
 import HighlightedQuote from '../quotes/HighlightedQuote';
 import { NotFoundDiv } from './NotFoundStyle';
+import { QuoteDetailCenteredDiv, QuoteDetailLink } from './QuoteDetailStyle';
 
 const DUMMY_QUOTES: QuoteType[] = [
   { id: 'q1', author: 'John', text: 'React is fun' },
@@ -29,6 +30,13 @@ function QuoteDetail() {
   return (
     <>
       <HighlightedQuote author={quote.author} text={quote.text} />
+      <Route path={`/quotes/${params.quoteId}`} exact>
+        <QuoteDetailCenteredDiv>
+          <QuoteDetailLink to={`/quotes/${params.quoteId}/comments`}>
+            Load Comments
+          </QuoteDetailLink>
+        </QuoteDetailCenteredDiv>
+      </Route>
       <Route path={`/quotes/:quoteId/comments`}>
         <Comments />
       </Route>
