@@ -9,6 +9,6 @@ export interface QuoteBeforePost {
   text: string;
 }
 
-export interface QuoteInFirebase {
+export interface QuoteDataInFirebase {
   [id: string]: QuoteBeforePost;
 }
