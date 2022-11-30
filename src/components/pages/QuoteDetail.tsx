@@ -1,11 +1,11 @@
 import { Link, Route, useParams, useRouteMatch } from 'react-router-dom';
 import Comments from '@/components/comments/Comments';
-import { QuoteType } from '@/components/quotes/types';
+import { QuoteAfterGet } from '@/components/quotes/types';
 import HighlightedQuote from '../quotes/HighlightedQuote';
 import { NotFoundDiv } from './NotFoundStyle';
 import { QuoteDetailCenteredDiv, QuoteDetailLink } from './QuoteDetailStyle';
 
-const DUMMY_QUOTES: QuoteType[] = [
+const DUMMY_QUOTES: QuoteAfterGet[] = [
   { id: 'q1', author: 'John', text: 'React is fun' },
   { id: 'q2', author: 'Mary', text: 'Rust is fun' },
 ];

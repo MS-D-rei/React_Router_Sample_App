@@ -1,4 +1,4 @@
-import { QuoteType } from '@/components/quotes/types';
+import { QuoteAfterGet } from '@/components/quotes/types';
 import QuoteITem from '@/components/quotes/QuoteItem';
 import {
   QuoteListSortDiv,
@@ -6,8 +6,8 @@ import {
 } from '@/components/quotes/QuoteListStyle';
 import { useHistory, useLocation } from 'react-router-dom';
 
-const sortQuotes = (quotes: QuoteType[], isAscending: boolean) => {
-  return quotes.sort((a: QuoteType, b: QuoteType) => {
+const sortQuotes = (quotes: QuoteAfterGet[], isAscending: boolean) => {
+  return quotes.sort((a: QuoteAfterGet, b: QuoteAfterGet) => {
     if (isAscending) {
       return a.id > b.id ? 1 : -1;
     } else {
@@ -17,7 +17,7 @@ const sortQuotes = (quotes: QuoteType[], isAscending: boolean) => {
 };
 
 interface QuoteListProps {
-  quotes: QuoteType[];
+  quotes: QuoteAfterGet[];
 }
 
 function QuoteList({ quotes }: QuoteListProps) {
