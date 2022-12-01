@@ -1,5 +1,5 @@
 import { useCallback, useReducer } from 'react';
-import { QuoteDataInFirebase } from '@/components/quotes/types';
+import { QuoteAfterGet, QuoteDataInFirebase } from '@/components/quotes/types';
 
 enum HttpReducerActionsType {
   SEND = 'SEND',
@@ -9,13 +9,13 @@ enum HttpReducerActionsType {
 
 interface HttpStateType {
   status: string | null;
-  data: QuoteDataInFirebase | null;
+  data: QuoteAfterGet | QuoteAfterGet[] | null;
   error: string | null;
 }
 
 interface HttpReducerAction {
   type: HttpReducerActionsType;
-  payload?: QuoteDataInFirebase | string;
+  payload?: QuoteAfterGet | QuoteAfterGet[] | string;
 }
 
 function httpReducer(
@@ -32,7 +32,7 @@ function httpReducer(
     case HttpReducerActionsType.SUCCESS:
       return {
         status: 'completed',
-        data: action.payload as QuoteDataInFirebase,
+        data: action.payload as QuoteAfterGet,
         error: null,
       };
     case HttpReducerActionsType.ERROR:
@@ -50,12 +50,6 @@ function httpReducer(
   }
 }
 
-const ReducerInitialState: HttpStateType = {
-  status: 'pending',
-  data: null,
-  error: null,
-};
-
 export function useHttp(requestFunction: Function, startWithPending = false) {
   const [httpState, dispatch] = useReducer(httpReducer, {
     status: startWithPending ? 'pending' : null,
@@ -67,8 +61,9 @@ export function useHttp(requestFunction: Function, startWithPending = false) {
     async (requestData: any) => {
       dispatch({ type: HttpReducerActionsType.SEND });
       try {
-        const response = await requestFunction(requestData);
-        dispatch({ type: HttpReducerActionsType.SUCCESS, payload: response });
+        const data = await requestFunction(requestData);
+        dispatch({ type: HttpReducerActionsType.SUCCESS, payload: data });
+        console.log(httpState);
       } catch (err) {
         if (err instanceof Error) {
           dispatch({
@@ -82,6 +77,11 @@ export function useHttp(requestFunction: Function, startWithPending = false) {
     },
     [requestFunction]
   );
+
+  return {
+    httpState,
+    sendRequest,
+  };
 }
 
 // import { useCallback } from 'react';

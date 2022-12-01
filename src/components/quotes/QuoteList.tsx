@@ -7,6 +7,9 @@ import {
 import { useHistory, useLocation } from 'react-router-dom';
 
 const sortQuotes = (quotes: QuoteAfterGet[], isAscending: boolean) => {
+  if (!quotes) {
+    return
+  }
   return quotes.sort((a: QuoteAfterGet, b: QuoteAfterGet) => {
     if (isAscending) {
       return a.id > b.id ? 1 : -1;
@@ -59,7 +62,7 @@ function QuoteList({ quotes }: QuoteListProps) {
         </button>
       </QuoteListSortDiv>
       <QuoteListUl>
-        {sortedQuotes.map((quote) => (
+        {sortedQuotes?.map((quote) => (
           <QuoteITem
             key={quote.id}
             id={quote.id}

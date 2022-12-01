@@ -4,7 +4,7 @@
 // https://vitejs.dev/guide/env-and-mode.html#env-files
 
 interface ImportMetaEnv {
-  readonly FIREBASE_DOMAIN: string;
+  readonly VITE_FIREBASE_DOMAIN: string;
 }
 
 interface ImportMeta {

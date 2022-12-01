@@ -1,5 +1,14 @@
 import { QuoteAfterGet } from '@/components/quotes/types';
 import QuoteList from '@/components/quotes/QuoteList';
+import { useHttp } from '@/components/hooks/use-firebase';
+import { getAllQuotes } from '@/components/lib/api';
+import { useEffect } from 'react';
+import { LoadingSpinnerDiv } from '@/components/UI/LoadingSpinnerStyle';
+import {
+  AllQuotesErrorP,
+  AllQuotesLoadingDiv,
+} from '@/components/pages/AllQuotesStyle';
+import { NotFoundDiv } from '@/components/pages/NotFoundStyle';
 
 const DUMMY_QUOTES: QuoteAfterGet[] = [
   { id: 'q1', author: 'John', text: 'React is fun' },
@@ -7,7 +16,37 @@ const DUMMY_QUOTES: QuoteAfterGet[] = [
 ];
 
 function AllQuotes() {
-  return <QuoteList quotes={DUMMY_QUOTES} />;
+  const { sendRequest, httpState } = useHttp(getAllQuotes, true);
+  const { status, data, error } = httpState;
+
+  // remove QuoteAfterGet type from httpState.data
+  const quotes = data as QuoteAfterGet[] | null;
+
+  useEffect(() => {
+    sendRequest('');
+  }, [sendRequest]);
+
+  if (status === 'pending') {
+    return (
+      <AllQuotesLoadingDiv>
+        <LoadingSpinnerDiv className="spinner" />
+      </AllQuotesLoadingDiv>
+    );
+  }
+
+  if (error) {
+    return <AllQuotesErrorP>{error}</AllQuotesErrorP>;
+  }
+
+  if (status === 'completed' && (!quotes || quotes.length === 0) || quotes === null) {
+    return (
+      <NotFoundDiv>
+        <p>No Quote Found</p>
+      </NotFoundDiv>
+    );
+  }
+
+  return <QuoteList quotes={quotes} />;
 }
 
 export default AllQuotes;

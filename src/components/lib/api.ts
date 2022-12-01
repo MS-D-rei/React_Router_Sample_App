@@ -1,10 +1,9 @@
 import {
   QuoteAfterGet,
   QuoteBeforePost,
-  QuoteDataInFirebase,
-} from '../quotes/types';
+} from '@/components/quotes/types';
 
-const FIREBASE_DOMAIN = import.meta.env.FIREBASE_DOMAIN;
+const FIREBASE_DOMAIN = import.meta.env.VITE_FIREBASE_DOMAIN;
 
 export const getAllQuotes = async () => {
   const response = await fetch(`${FIREBASE_DOMAIN}/quotes.json`);
@@ -23,6 +22,7 @@ export const getAllQuotes = async () => {
       id: key,
       ...data[key],
     };
+    transformedQuotes.push(quote);
   }
 
   return transformedQuotes;
