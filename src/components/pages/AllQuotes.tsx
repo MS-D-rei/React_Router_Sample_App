@@ -9,6 +9,7 @@ import {
   AllQuotesLoadingDiv,
 } from '@/components/pages/AllQuotesStyle';
 import { NotFoundDiv } from '@/components/pages/NotFoundStyle';
+import NoQuotesFound from './NoQuotesFound';
 
 const DUMMY_QUOTES: QuoteAfterGet[] = [
   { id: 'q1', author: 'John', text: 'React is fun' },
@@ -38,12 +39,11 @@ function AllQuotes() {
     return <AllQuotesErrorP>{error}</AllQuotesErrorP>;
   }
 
-  if (status === 'completed' && (!quotes || quotes.length === 0) || quotes === null) {
-    return (
-      <NotFoundDiv>
-        <p>No Quote Found</p>
-      </NotFoundDiv>
-    );
+  if (
+    (status === 'completed' && (!quotes || quotes.length === 0)) ||
+    quotes === null
+  ) {
+    return <NoQuotesFound />;
   }
 
   return <QuoteList quotes={quotes} />;
