@@ -1,20 +1,19 @@
-import { QuoteAfterGet } from '@/components/quotes/types';
+import { useEffect } from 'react';
 import QuoteList from '@/components/quotes/QuoteList';
+import NoQuotesFound from '@/components/pages/NoQuotesFound';
+import { QuoteAfterGet } from '@/components/quotes/types';
 import { useHttp } from '@/components/hooks/use-firebase';
 import { getAllQuotes } from '@/components/lib/api';
-import { useEffect } from 'react';
 import { LoadingSpinnerDiv } from '@/components/UI/LoadingSpinnerStyle';
 import {
   AllQuotesErrorP,
   AllQuotesLoadingDiv,
 } from '@/components/pages/AllQuotesStyle';
-import { NotFoundDiv } from '@/components/pages/NotFoundStyle';
-import NoQuotesFound from './NoQuotesFound';
 
-const DUMMY_QUOTES: QuoteAfterGet[] = [
-  { id: 'q1', author: 'John', text: 'React is fun' },
-  { id: 'q2', author: 'Mary', text: 'Rust is fun' },
-];
+// const DUMMY_QUOTES: QuoteAfterGet[] = [
+//   { id: 'q1', author: 'John', text: 'React is fun' },
+//   { id: 'q2', author: 'Mary', text: 'Rust is fun' },
+// ];
 
 function AllQuotes() {
   const { sendRequest, httpState } = useHttp(getAllQuotes, true);

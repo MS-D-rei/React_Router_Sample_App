@@ -29,7 +29,7 @@ function QuoteList({ quotes }: QuoteListProps) {
 
   const queryParams = new URLSearchParams(location.search);
 
-  console.log(location);
+  // console.log(location);
   /*
     {pathname: '/quotes', search: '', hash: '', state: null, key: '69glwf'}
     hash: ""
@@ -39,7 +39,7 @@ function QuoteList({ quotes }: QuoteListProps) {
     state: null
     [[Prototype]]: Object
   */
-  console.log(queryParams);
+  // console.log(queryParams);
 
   const isSortingAscending = queryParams.get('sort') === 'asc';
 
