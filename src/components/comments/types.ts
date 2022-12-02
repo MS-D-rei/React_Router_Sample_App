@@ -7,7 +7,7 @@ export interface CommentInFirebaseType {
   [id: string]: CommentType;
 }
 
-export interface CommnetInAppType {
+export interface CommentInAppType {
   id: string;
   quoteId: string;
   text: string;

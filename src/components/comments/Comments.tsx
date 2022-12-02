@@ -1,11 +1,16 @@
-import { useEffect, useState } from 'react';
-import { CommentsLoadingDiv, CommentsSection } from '@/components/comments/CommentsStyle';
-import NewCommentForm from '@/components/comments/NewCommentForm';
-import { useHttp } from '../hooks/use-firebase';
-import { getAllComments } from '../lib/api';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { LoadingSpinnerDiv } from '../UI/LoadingSpinnerStyle';
-import { CommnetInAppType } from './types';
+import CommentsList from '@/components/comments/CommentsList';
+import NewCommentForm from '@/components/comments/NewCommentForm';
+import {
+  CommentsErrorP,
+  CommentsLoadingDiv,
+  CommentsSection,
+} from '@/components/comments/CommentsStyle';
+import { useHttp } from '@/components/hooks/use-firebase';
+import { getAllComments } from '@/components/lib/api';
+import { LoadingSpinnerDiv } from '@/components/UI/LoadingSpinnerStyle';
+import { CommentInAppType } from '@/components/comments/types';
 
 interface paramsProps {
   quoteId: string;
@@ -15,12 +20,18 @@ function Comments() {
   const [isAddingComment, setIsAddingComment] = useState(false);
   const params = useParams<paramsProps>();
   const { sendRequest, httpState } = useHttp(getAllComments);
-  const { status, data } = httpState;
-  const allComments = data as unknown as CommnetInAppType[];
+  const { status, data, error } = httpState;
+  const allComments = data as unknown as CommentInAppType[];
 
   useEffect(() => {
     sendRequest(params.quoteId);
-  }, [params, sendRequest]);
+  }, [sendRequest, params]);
+
+  // useEffect(() => {
+  //   if (status === 'completed' && !error) {
+  //     sendRequest(params.quoteId);
+  //   }
+  // }, [sendRequest, params, status, error]);
 
   const addCommentHandler = () => {
     setIsAddingComment(true);
@@ -28,17 +39,28 @@ function Comments() {
 
   let commentsContent;
 
+  // While pending
   if (status === 'pending') {
     commentsContent = (
       <CommentsLoadingDiv>
-        <LoadingSpinnerDiv className='spinner' />
+        <LoadingSpinnerDiv className="spinner" />
       </CommentsLoadingDiv>
-    )
+    );
   }
 
-  // if (status === 'completed' && (allComments && allComments.length > 0)) {
-    
-  // }
+  // Status completed & allComments has 1 content at least
+  if (status === 'completed' && allComments && allComments.length > 0) {
+    commentsContent = <CommentsList comments={allComments} />;
+  }
+
+  // Status completed & no content
+  if (status === 'completed' && (!allComments || allComments.length === 0)) {
+    commentsContent = <CommentsErrorP>No comments found</CommentsErrorP>;
+  }
+
+  const afterAddCommentHandler = useCallback(() => {
+    sendRequest(params.quoteId);
+  }, [sendRequest, params]);
 
   return (
     <CommentsSection>
@@ -46,8 +68,10 @@ function Comments() {
       {!isAddingComment && (
         <button onClick={addCommentHandler}>Add a Comment</button>
       )}
-      {isAddingComment && <NewCommentForm />}
-      <p>Comments...</p>
+      {isAddingComment && (
+        <NewCommentForm onAddComment={afterAddCommentHandler} />
+      )}
+      {commentsContent}
     </CommentsSection>
   );
 }

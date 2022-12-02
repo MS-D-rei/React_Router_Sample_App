@@ -1,5 +1,16 @@
 import styled from 'styled-components';
 
+export const CommentsErrorP = styled.p`
+  margin: 3rem auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3rem;
+  font-weight: bold;
+  color: white;
+`;
+
 export const CommentsLoadingDiv = styled.div`
   margin: 3rem auto;
   text-align: center;

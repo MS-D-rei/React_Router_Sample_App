@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   NewCommentFormActionButton,
   NewCommentFormControlDiv,
@@ -10,19 +10,32 @@ import { addComment } from '@/components/lib/api';
 import { LoadingSpinnerDiv } from '../UI/LoadingSpinnerStyle';
 import { useParams } from 'react-router-dom';
 
+interface NewCommentFormProps {
+  onAddComment: Function;
+}
+
 interface paramsProps {
   quoteId: string;
 }
 
-function NewCommentForm() {
+function NewCommentForm({ onAddComment }: NewCommentFormProps) {
   const commentTextRef = useRef<HTMLTextAreaElement>(null);
   const params = useParams<paramsProps>();
   const { sendRequest, httpState } = useHttp(addComment);
-  const { status } = httpState;
+  const { status, error } = httpState;
+
+  useEffect(() => {
+    if (status === 'completed' && !error) {
+      onAddComment();
+    }
+  }, [status, error, onAddComment]);
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    sendRequest({ quoteId: params.quoteId, text: commentTextRef.current?.value });
+    sendRequest({
+      quoteId: params.quoteId,
+      text: commentTextRef.current?.value,
+    });
   };
 
   return (
