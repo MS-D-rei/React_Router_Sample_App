@@ -1,5 +1,13 @@
 import styled from 'styled-components';
 
+export const CommentsLoadingDiv = styled.div`
+  margin: 3rem auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const CommentsSection = styled.section`
   text-align: center;
 

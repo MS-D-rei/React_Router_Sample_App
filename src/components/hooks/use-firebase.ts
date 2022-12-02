@@ -1,5 +1,6 @@
 import { useCallback, useReducer } from 'react';
-import { QuoteAfterGet, QuoteDataInFirebase } from '@/components/quotes/types';
+import { QuoteAfterGet } from '@/components/quotes/types';
+import { CommnetInAppType } from '../comments/types';
 
 enum HttpReducerActionsType {
   SEND = 'SEND',

@@ -1,7 +1,5 @@
-import {
-  QuoteAfterGet,
-  QuoteBeforePost,
-} from '@/components/quotes/types';
+import { QuoteAfterGet, QuoteBeforePost } from '@/components/quotes/types';
+import { CommentInFirebaseType, CommentType } from '@/components/comments/types';
 
 const FIREBASE_DOMAIN = import.meta.env.VITE_FIREBASE_DOMAIN;
 
@@ -60,6 +58,45 @@ export const addQuote = async (quote: QuoteBeforePost) => {
     throw new Error('Could not add the quote');
   }
 };
+
+export const addComment = async (comment: CommentType) => {
+  const response = await fetch(
+    `${FIREBASE_DOMAIN}/comments/${comment.quoteId}.json`,
+    {
+      method: 'POST',
+      body: JSON.stringify(comment),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+  );
+  const data = response.json();
+
+  if (!response.ok) {
+    throw new Error('Could not add comment');
+  }
+};
+
+export const getAllComments = async (quoteId: string) => {
+  const response = await fetch(`${FIREBASE_DOMAIN}/comments/${quoteId}.json`);
+  const data = await response.json();
+  
+  if (!response.ok) {
+    throw new Error('Could not get comments');
+  }
+
+  let transformedComments: CommentInFirebaseType[] = [];
+
+  for (const key in data) {
+    const commentObj = {
+      id: key,
+      ...data[key],
+    }
+    transformedComments.push(commentObj);
+  }
+
+  return transformedComments;
+}
 
 // import { useFirebaseQuotes } from '../hooks/use-firebase';
 // import { QuoteAfterGet, QuoteBeforePost } from '../quotes/types';
