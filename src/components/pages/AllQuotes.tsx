@@ -9,6 +9,7 @@ import {
   AllQuotesErrorP,
   AllQuotesLoadingDiv,
 } from '@/components/pages/AllQuotesStyle';
+import { Outlet } from 'react-router-dom';
 
 // const DUMMY_QUOTES: QuoteAfterGet[] = [
 //   { id: 'q1', author: 'John', text: 'React is fun' },

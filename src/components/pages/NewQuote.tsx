@@ -1,16 +1,16 @@
 import QuoteForm from "@/components/quotes/QuoteForm";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useHttp } from "@/components/hooks/use-firebase";
 import { addQuote } from "@/components/lib/api";
 
 function NewQuote() {
-  const history = useHistory();
+  const navigate = useNavigate();
   const { sendRequest, httpState } = useHttp(addQuote);
 
   useEffect(() => {
     if (httpState.status === 'completed') {
-      history.push('/quotes');
+      navigate('/quotes');
     }
   }, [httpState, history])
 

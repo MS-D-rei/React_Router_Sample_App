@@ -6,7 +6,7 @@ interface QuoteItemProps {
   text: string;
 }
 
-function QuoteITem({ id, author, text }: QuoteItemProps) {
+function QuoteItem({ id, author, text }: QuoteItemProps) {
   return (
     <QuoteItemLi>
       <figure>
@@ -15,9 +15,9 @@ function QuoteITem({ id, author, text }: QuoteItemProps) {
         </blockquote>
         <figcaption>{author}</figcaption>
       </figure>
-      <QuoteItemLink to={`/quotes/${id}`}>View Fullscreen</QuoteItemLink>
+      <QuoteItemLink to={id}>View Fullscreen</QuoteItemLink>
     </QuoteItemLi>
   );
 }
 
-export default QuoteITem;
+export default QuoteItem;

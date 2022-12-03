@@ -13,7 +13,7 @@ import { LoadingSpinnerDiv } from '@/components/UI/LoadingSpinnerStyle';
 import { CommentInAppType } from '@/components/comments/types';
 
 interface paramsProps {
-  quoteId: string;
+  [quoteId: string]: string;
 }
 
 function Comments() {

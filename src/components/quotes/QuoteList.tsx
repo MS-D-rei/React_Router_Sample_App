@@ -1,10 +1,10 @@
 import { QuoteAfterGet } from '@/components/quotes/types';
-import QuoteITem from '@/components/quotes/QuoteItem';
+import QuoteItem from '@/components/quotes/QuoteItem';
 import {
   QuoteListSortDiv,
   QuoteListUl,
 } from '@/components/quotes/QuoteListStyle';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const sortQuotes = (quotes: QuoteAfterGet[], isAscending: boolean) => {
   if (!quotes) {
@@ -24,7 +24,7 @@ interface QuoteListProps {
 }
 
 function QuoteList({ quotes }: QuoteListProps) {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const queryParams = new URLSearchParams(location.search);
@@ -48,7 +48,7 @@ function QuoteList({ quotes }: QuoteListProps) {
   const changeSortingHandler = () => {
     // after push, this component will be re-evaluated.
     // history.push(`${location.pathname}?sort=${isSortingAscending ? 'desc' : 'asc'}`);
-    history.push({
+    navigate({
       pathname: location.pathname,
       search: `?sort=${isSortingAscending ? 'desc' : 'asc'}`,
     });
@@ -63,7 +63,7 @@ function QuoteList({ quotes }: QuoteListProps) {
       </QuoteListSortDiv>
       <QuoteListUl>
         {sortedQuotes?.map((quote) => (
-          <QuoteITem
+          <QuoteItem
             key={quote.id}
             id={quote.id}
             author={quote.author}

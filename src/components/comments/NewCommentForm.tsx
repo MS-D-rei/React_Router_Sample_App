@@ -15,7 +15,7 @@ interface NewCommentFormProps {
 }
 
 interface paramsProps {
-  quoteId: string;
+  [quoteId: string]: string;
 }
 
 function NewCommentForm({ onAddComment }: NewCommentFormProps) {

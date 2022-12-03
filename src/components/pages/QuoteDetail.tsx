@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Route, useParams, useRouteMatch } from 'react-router-dom';
+import { Route, Routes, useMatch, useParams } from 'react-router-dom';
 import Comments from '@/components/comments/Comments';
 import HighlightedQuote from '@/components/quotes/HighlightedQuote';
 import { QuoteAfterGet } from '@/components/quotes/types';
@@ -14,27 +14,35 @@ import { useHttp } from '@/components/hooks/use-firebase';
 import { getSingleQuote } from '@/components/lib/api';
 import { LoadingSpinnerDiv } from '../UI/LoadingSpinnerStyle';
 
-const DUMMY_QUOTES: QuoteAfterGet[] = [
-  { id: 'q1', author: 'John', text: 'React is fun' },
-  { id: 'q2', author: 'Mary', text: 'Rust is fun' },
-];
+// const DUMMY_QUOTES: QuoteAfterGet[] = [
+//   { id: 'q1', author: 'John', text: 'React is fun' },
+//   { id: 'q2', author: 'Mary', text: 'Rust is fun' },
+// ];
 
 interface paramsProps {
-  quoteId: string;
+  [quoteId: string]: string;
 }
 
 function QuoteDetail() {
   const params = useParams<paramsProps>();
-  const match = useRouteMatch();
-  // console.log(match);
+  //   const match = useRouteMatch();
+  //   // console.log(match);
+  //   /*
+  //   {path: '/quotes/:quoteId', url: '/quotes/q1', isExact: false, params: {…}}
+  //   isExact: false
+  //   params: {quoteId: 'q1'}
+  //   path: "/quotes/:quoteId"
+  //   url: "/quotes/q1"
+  //   [[Prototype]]: Object
+  // */
+  const match = useMatch('quotes/:quoteId');
+  console.log(match);
   /*
-  {path: '/quotes/:quoteId', url: '/quotes/q1', isExact: false, params: {…}}
-  isExact: false
-  params: {quoteId: 'q1'}
-  path: "/quotes/:quoteId"
-  url: "/quotes/q1"
-  [[Prototype]]: Object
-*/
+  params: {quoteId: '-NID1590_OKhP75TIdhj'}
+  pathname: "/quotes/-NID1590_OKhP75TIdhj"
+  pathnameBase: "/quotes/-NID1590_OKhP75TIdhj"
+  pattern: {path: 'quotes/:quoteId', caseSensitive: false, end: true}
+  */
 
   // const quote = DUMMY_QUOTES.find((quote) => quote.id === params.quoteId);
 
@@ -71,16 +79,20 @@ function QuoteDetail() {
   return (
     <>
       <HighlightedQuote author={quote.author} text={quote.text} />
-      <Route path={`${match.path}`} exact>
-        <QuoteDetailCenteredDiv>
-          <QuoteDetailLink to={`${match.url}/comments`}>
-            Load Comments
-          </QuoteDetailLink>
-        </QuoteDetailCenteredDiv>
-      </Route>
-      <Route path={`${match.path}/comments`}>
-        <Comments />
-      </Route>
+      <QuoteDetailCenteredDiv>
+        <QuoteDetailLink to='comments'>Load Comments</QuoteDetailLink>
+      </QuoteDetailCenteredDiv>
+      <Routes>
+        {/* <Route
+          path={`.`}
+          element={
+            <QuoteDetailCenteredDiv>
+              <QuoteDetailLink to={`comments`}>Load Comments</QuoteDetailLink>
+            </QuoteDetailCenteredDiv>
+          }
+        /> */}
+        <Route path='comments' element={<Comments />} />
+      </Routes>
     </>
   );
 }

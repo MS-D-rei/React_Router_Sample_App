@@ -8,7 +8,7 @@ import {
   QuoteFormLoadingDiv,
 } from '@/components/quotes/QuoteFormStyle';
 import { LoadingSpinnerDiv } from '../UI/LoadingSpinnerStyle';
-import { Prompt } from 'react-router-dom';
+// import { Prompt } from 'react-router-dom';
 
 interface QuoteFormProps {
   isLoading: boolean;
@@ -45,12 +45,13 @@ function QuoteForm({ isLoading, onAddQuote }: QuoteFormProps) {
 
   return (
     <>
-      <Prompt
+      {/* <Prompt> is not supported in v6 so far */}
+      {/* <Prompt
         when={isInputting}
         message={(location) =>
           'Are you sure to leave? All input data will be lost'
         }
-      />
+      /> */}
       <CardDiv>
         <QuoteFormForm onSubmit={submitHandler} onFocus={formFocusHandler}>
           {isLoading && (
