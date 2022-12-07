@@ -1,16 +1,19 @@
 import React from 'react';
 import MainNavigation from '@/components/layout/MainNavigation';
 import { LayoutMain } from '@/components/layout/LayoutStyle';
+import { Outlet } from 'react-router-dom';
 
-interface LayoutProps {
-  children: React.ReactNode;
-}
+// interface LayoutProps {
+//   children: React.ReactNode;
+// }
 
-function Layout({ children }: LayoutProps) {
+function Layout() {
   return (
     <>
       <MainNavigation />
-      <LayoutMain>{children}</LayoutMain>
+      <LayoutMain>
+        <Outlet />
+      </LayoutMain>
     </>
   );
 }
