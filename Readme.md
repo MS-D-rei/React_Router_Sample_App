@@ -109,3 +109,26 @@ function NewQuote() {
   navigate('/quotes');
 }
 ```
+
+## lazy component loading with Suspense
+reactjs URL
+https://beta.reactjs.org/apis/react/lazy
+```ts
+// router.tsx
+const QuoteDetail = React.lazy(() => import('@/components/pages/QuoteDetail'));
+export const router = createBrowserRouter([
+  {
+    path: 'quotes/:quoteId/*',
+    element: (
+      // Need to set fallback component while loading component
+      <Suspense fallback={
+        <QuoteDetailLoadingDiv>
+          <LoadingSpinnerDiv className="spinner" />
+        </QuoteDetailLoadingDiv>
+      }>
+        <QuoteDetail />
+      </Suspense>
+    ),
+  },
+])
+```

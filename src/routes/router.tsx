@@ -1,9 +1,15 @@
 import Layout from '@/components/layout/Layout';
 import AllQuotes from '@/components/pages/AllQuotes';
-import NewQuote from '@/components/pages/NewQuote';
+// import NewQuote from '@/components/pages/NewQuote';
 import { NotFoundDiv } from '@/components/pages/NotFoundStyle';
-import QuoteDetail from '@/components/pages/QuoteDetail';
+import { QuoteDetailLoadingDiv } from '@/components/pages/QuoteDetailStyle';
+import { LoadingSpinnerDiv } from '@/components/UI/LoadingSpinnerStyle';
+// import QuoteDetail from '@/components/pages/QuoteDetail';
+import React, { Suspense } from 'react';
 import { createBrowserRouter, Navigate } from 'react-router-dom';
+
+const QuoteDetail = React.lazy(() => import('@/components/pages/QuoteDetail'));
+const NewQuote = React.lazy(() => import('@/components/pages/NewQuote'));
 
 export const router = createBrowserRouter([
   {
@@ -15,7 +21,7 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to='quotes' />
+            element: <Navigate to="quotes" />,
           },
           {
             path: 'quotes',
@@ -23,11 +29,31 @@ export const router = createBrowserRouter([
           },
           {
             path: 'quotes/:quoteId/*',
-            element: <QuoteDetail />,
+            element: (
+              <Suspense
+                fallback={
+                  <QuoteDetailLoadingDiv>
+                    <LoadingSpinnerDiv className="spinner" />
+                  </QuoteDetailLoadingDiv>
+                }
+              >
+                <QuoteDetail />
+              </Suspense>
+            ),
           },
           {
             path: 'new-quote',
-            element: <NewQuote />,
+            element: (
+              <Suspense
+                fallback={
+                  <QuoteDetailLoadingDiv>
+                    <LoadingSpinnerDiv className="spinner" />
+                  </QuoteDetailLoadingDiv>
+                }
+              >
+                <NewQuote />
+              </Suspense>
+            ),
           },
           {
             path: '*',
