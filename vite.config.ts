@@ -13,7 +13,7 @@ import path from 'path';
 // });
 
 export default defineConfig(({ command, mode }) => {
-  const env = loadEnv(mode, process.cwd(), ['VITE_FIREBASE_DOMAIN']);
+  const env = loadEnv(mode, process.cwd(), ['VITE_FIREBASE_DOMAIN', 'VITE_FIREBASE_WEB_API_KEY']);
   return {
     plugins: [react()],
     resolve: {

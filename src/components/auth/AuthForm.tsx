@@ -6,12 +6,14 @@ import {
   AuthFormButton,
   AuthFormControlDiv,
   AuthFormSection,
-} from './AuthFormStyle';
+} from '@/components/auth/AuthFormStyle';
+import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
 
 export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(false);
   const dispatch = useAppDispatch();
-  const authState = useAppSelector((state) => state.auth); 
+  const authState = useAppSelector((state) => state.auth);
+  const { sendSignUpRequest, isLoading } = useFirebaseAuth();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -19,16 +21,21 @@ export default function AuthForm() {
 
   const emailChangeHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     dispatch(setEmail(event.target.value));
-  }
+  };
 
   const passwordChangeHandler = (event: React.FocusEvent<HTMLInputElement>) => {
     dispatch(setPassword(event.target.value));
-  }
+  };
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log(authState);
-  }
+
+    if (isLogin) {
+    } else {
+      sendSignUpRequest(authState.email, authState.password);
+    }
+  };
 
   return (
     <AuthFormSection>
@@ -36,16 +43,32 @@ export default function AuthForm() {
       <form onSubmit={submitHandler}>
         <AuthFormControlDiv>
           <label htmlFor="email">Your Email</label>
-          <input type="email" id="email" value={authState.email} onChange={emailChangeHandler} required />
+          <input
+            type="email"
+            id="email"
+            value={authState.email}
+            onChange={emailChangeHandler}
+            required
+          />
         </AuthFormControlDiv>
         <AuthFormControlDiv>
           <label htmlFor="password">Your Password</label>
-          <input type="password" id="password" value={authState.password} onChange={passwordChangeHandler} required />
+          <input
+            type="password"
+            id="password"
+            value={authState.password}
+            onChange={passwordChangeHandler}
+            required
+          />
         </AuthFormControlDiv>
         <AuthFormActionsDiv>
-          <AuthFormButton>
-            {isLogin ? 'Login' : 'Create Account'}
-          </AuthFormButton>
+          {isLoading ? (
+            <p>Sending request...</p>
+          ) : (
+            <AuthFormButton>
+              {isLogin ? 'Login' : 'Create Account'}
+            </AuthFormButton>
+          )}
           <AuthFormButton
             type="button"
             className="toggle"

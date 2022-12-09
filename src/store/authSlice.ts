@@ -3,13 +3,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface IAuthState {
   email: string;
   password: string;
-  isLogin: boolean;
+  isLoggedIn: boolean;
 }
 
 const initialState: IAuthState = {
   email: '',
   password: '',
-  isLogin: false,
+  isLoggedIn: false,
 };
 
 const authSlice = createSlice({
@@ -22,6 +22,9 @@ const authSlice = createSlice({
     setPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
+    validateAuth: (state, action) => {
+
+    }
   },
 });
 
