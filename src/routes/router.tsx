@@ -1,3 +1,4 @@
+import AuthForm from '@/components/auth/AuthForm';
 import Layout from '@/components/layout/Layout';
 import AllQuotes from '@/components/pages/AllQuotes';
 // import NewQuote from '@/components/pages/NewQuote';
@@ -21,7 +22,11 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to="quotes" />,
+            element: <Navigate to="auth" />,
+          },
+          {
+            path: 'auth',
+            element: <AuthForm />
           },
           {
             path: 'quotes',
