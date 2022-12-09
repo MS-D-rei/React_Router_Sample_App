@@ -51,7 +51,7 @@ interface AuthFormButtonProps
   className?: string;
 }
 
-export const AuthFormButton = styled.div<AuthFormButtonProps>`
+export const AuthFormButton = styled.button<AuthFormButtonProps>`
   cursor: pointer;
   font: inherit;
   color: white;
