@@ -13,7 +13,7 @@ export default function AuthForm() {
   const [isLogin, setIsLogin] = useState(false);
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.auth);
-  const { sendSignUpRequest, isLoading } = useFirebaseAuth();
+  const { isLoading, sendSignUpRequest, sendSignInRequest } = useFirebaseAuth();
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -32,6 +32,7 @@ export default function AuthForm() {
     console.log(authState);
 
     if (isLogin) {
+      sendSignInRequest(authState.email, authState.password);
     } else {
       sendSignUpRequest(authState.email, authState.password);
     }

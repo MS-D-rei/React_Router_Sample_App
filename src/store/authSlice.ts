@@ -4,12 +4,14 @@ interface IAuthState {
   email: string;
   password: string;
   isLoggedIn: boolean;
+  token: string;
 }
 
 const initialState: IAuthState = {
   email: '',
   password: '',
   isLoggedIn: false,
+  token: '',
 };
 
 const authSlice = createSlice({
@@ -22,9 +24,6 @@ const authSlice = createSlice({
     setPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
-    validateAuth: (state, action) => {
-
-    }
   },
 });
 

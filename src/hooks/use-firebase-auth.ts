@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 interface IRequestBodyPayload {
   email: string;
@@ -6,12 +6,21 @@ interface IRequestBodyPayload {
   returnSecureToken: boolean;
 }
 
-interface IResponsePayload {
+interface ISignUpResponsePayload {
   idToken: string;
   email: string;
   refreshToken: string;
   expiresIn: string;
   localId: string;
+}
+
+interface ISignInResponsePayload {
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string; 
+  registered: boolean;
 }
 
 export function useFirebaseAuth() {
@@ -36,12 +45,12 @@ export function useFirebaseAuth() {
           body: JSON.stringify(bodyContent),
         }
       );
-  
+
       if (!response.ok) {
         throw new Error('Could not send auth request');
       }
-  
-      const data: IResponsePayload = await response.json();
+
+      const data: ISignUpResponsePayload = await response.json();
       console.log(data);
       setIsLoading(false);
     } catch (error) {
@@ -50,7 +59,42 @@ export function useFirebaseAuth() {
         throw new Error(error.message);
       } else {
         setIsLoading(false);
-        throw new Error(`Unexpected Error: ${error}`)
+        throw new Error(`Unexpected Error: ${error}`);
+      }
+    }
+  };
+
+  const sendSignInRequest = async (email: string, password: string) => {
+    const bodyContent: IRequestBodyPayload = {
+      email,
+      password,
+      returnSecureToken: true,
+    };
+    setIsLoading(true);
+    try {
+      const response = await fetch(
+        `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${
+          import.meta.env.VITE_FIREBASE_WEB_API_KEY
+        }`,
+        {
+          method: 'POST',
+          headers: {
+            'Context-Type': 'application/json',
+          },
+          body: JSON.stringify(bodyContent),
+        }
+      );
+
+      const data: ISignInResponsePayload = await response.json();
+      console.log(data);
+      setIsLoading(false);
+    } catch (error) {
+      if (error instanceof Error) {
+        setIsLoading(false);
+        throw new Error(error.message);
+      } else {
+        setIsLoading(false);
+        throw new Error(`Unexpected Error: ${error}`);
       }
     }
   };
@@ -58,5 +102,6 @@ export function useFirebaseAuth() {
   return {
     isLoading,
     sendSignUpRequest,
+    sendSignInRequest,
   };
 }
