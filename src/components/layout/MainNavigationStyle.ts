@@ -38,4 +38,16 @@ export const MainNavigationNav = styled.nav`
   a.active {
     color: #e6fcfc;
   }
+
+  & button {
+    font: inherit;
+    background-color: transparent;
+    border: 0;
+    text-decoration: none;
+    color: #88dfdf;
+  }
+
+  & button:hover {
+    color: #e6fcfc;
+  }
 `;

@@ -1,4 +1,4 @@
-import { setToken } from '@/store/authSlice';
+import { logInOutToggle, setToken } from '@/store/authSlice';
 import { useState } from 'react';
 import { useAppDispatch } from './store-hooks';
 import {
@@ -40,7 +40,10 @@ export function useFirebaseAuth() {
 
       const data: ISignUpResponsePayload = await response.json();
       console.log(data);
+      // Set the generated idToken and evaluate login state.
       dispatch(setToken(data.idToken));
+      dispatch(logInOutToggle());
+
       setIsLoading(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -80,6 +83,10 @@ export function useFirebaseAuth() {
 
       const data: ISignInResponsePayload = await response.json();
       console.log(data);
+
+      // Set the received idToken and evaluate login state.
+      dispatch(setToken(data.idToken));
+      dispatch(logInOutToggle());
 
       setIsLoading(false);
     } catch (error) {
