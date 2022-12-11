@@ -4,14 +4,14 @@ interface IAuthState {
   email: string;
   password: string;
   isLoggedIn: boolean;
-  token: string;
+  idToken: string;
 }
 
 const initialState: IAuthState = {
   email: '',
   password: '',
   isLoggedIn: false,
-  token: '',
+  idToken: '',
 };
 
 const authSlice = createSlice({
@@ -25,13 +25,13 @@ const authSlice = createSlice({
       state.password = action.payload;
     },
     setToken: (state, action: PayloadAction<string>) => {
-      state.token = action.payload;
+      state.idToken = action.payload;
     },
     logInOutToggle: (state) => {
-      state.isLoggedIn = !!state.token;
+      state.isLoggedIn = !!state.idToken;
     },
     removeToken: (state) => {
-      state.token = '';
+      state.idToken = '';
     }
   },
 });

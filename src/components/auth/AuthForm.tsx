@@ -10,7 +10,7 @@ import {
 import { useFirebaseAuth } from '@/hooks/use-firebase-auth';
 
 export default function AuthForm() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const dispatch = useAppDispatch();
   const authState = useAppSelector((state) => state.auth);
   const { isLoading, sendSignUpRequest, sendSignInRequest } = useFirebaseAuth();
