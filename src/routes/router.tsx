@@ -4,6 +4,7 @@ import AllQuotes from '@/components/pages/AllQuotes';
 // import NewQuote from '@/components/pages/NewQuote';
 import { NotFoundDiv } from '@/components/pages/NotFoundStyle';
 import { QuoteDetailLoadingDiv } from '@/components/pages/QuoteDetailStyle';
+import ProfileForm from '@/components/profile/ProfileForm';
 import { LoadingSpinnerDiv } from '@/components/UI/LoadingSpinnerStyle';
 // import QuoteDetail from '@/components/pages/QuoteDetail';
 import React, { Suspense } from 'react';
@@ -26,7 +27,11 @@ export const router = createBrowserRouter([
           },
           {
             path: 'auth',
-            element: <AuthForm />
+            element: <AuthForm />,
+          },
+          {
+            path: 'profile',
+            element: <ProfileForm />,
           },
           {
             path: 'quotes',

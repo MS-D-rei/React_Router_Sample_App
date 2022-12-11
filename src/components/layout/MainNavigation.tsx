@@ -31,6 +31,9 @@ function MainNavigation() {
             </li>
           )}
           <li>
+            <NavLink to='profile'>Profile</NavLink>
+          </li>
+          <li>
             <NavLink to="new-quote">Add a Quote</NavLink>
           </li>
           {auth.isLoggedIn ? <li>
