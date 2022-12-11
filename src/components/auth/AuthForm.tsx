@@ -29,13 +29,14 @@ export default function AuthForm() {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(authState);
-
+    
     if (isLogin) {
       sendSignInRequest(authState.email, authState.password);
     } else {
       sendSignUpRequest(authState.email, authState.password);
     }
+    
+    console.log(authState);
   };
 
   return (

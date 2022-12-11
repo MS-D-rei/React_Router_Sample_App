@@ -1,4 +1,6 @@
+import { setToken } from '@/store/authSlice';
 import { useState } from 'react';
+import { useAppDispatch } from './store-hooks';
 
 interface IRequestBodyPayload {
   email: string;
@@ -25,6 +27,8 @@ interface ISignInResponsePayload {
 
 export function useFirebaseAuth() {
   const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
+
   const sendSignUpRequest = async (email: string, password: string) => {
     const bodyContent: IRequestBodyPayload = {
       email,
@@ -52,6 +56,7 @@ export function useFirebaseAuth() {
 
       const data: ISignUpResponsePayload = await response.json();
       console.log(data);
+      dispatch(setToken(data.idToken));
       setIsLoading(false);
     } catch (error) {
       if (error instanceof Error) {
@@ -79,7 +84,7 @@ export function useFirebaseAuth() {
         {
           method: 'POST',
           headers: {
-            'Context-Type': 'application/json',
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify(bodyContent),
         }
@@ -87,6 +92,7 @@ export function useFirebaseAuth() {
 
       const data: ISignInResponsePayload = await response.json();
       console.log(data);
+      
       setIsLoading(false);
     } catch (error) {
       if (error instanceof Error) {
