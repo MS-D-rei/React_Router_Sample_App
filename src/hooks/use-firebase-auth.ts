@@ -8,10 +8,12 @@ import {
   ISignInResponsePayload,
   ISignUpResponsePayload,
 } from '@/hooks/FirebaseTypes';
+import { useNavigate } from 'react-router-dom';
 
 export function useFirebaseAuth() {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const sendSignUpRequest = async (email: string, password: string) => {
     const bodyContent: IRequestBodyPayload = {
@@ -45,6 +47,7 @@ export function useFirebaseAuth() {
       dispatch(logInOutToggle());
 
       setIsLoading(false);
+
     } catch (error) {
       if (error instanceof Error) {
         setIsLoading(false);
@@ -84,11 +87,14 @@ export function useFirebaseAuth() {
       const data: ISignInResponsePayload = await response.json();
       console.log(data);
 
+      setIsLoading(false);
+
       // Set the received idToken and evaluate login state.
       dispatch(setToken(data.idToken));
       dispatch(logInOutToggle());
 
-      setIsLoading(false);
+      navigate('/quotes');
+
     } catch (error) {
       if (error instanceof Error) {
         setIsLoading(false);
@@ -123,12 +129,12 @@ export function useFirebaseAuth() {
           body: JSON.stringify(bodyContent),
         }
       );
-  
+
       if (!response.ok) {
         throw new Error('Could not send change password request');
       }
-  
-      const data: IChangePasswordResponsePayload = await response.json()
+
+      const data: IChangePasswordResponsePayload = await response.json();
       console.log(data);
       setIsLoading(false);
     } catch (error) {
@@ -140,7 +146,6 @@ export function useFirebaseAuth() {
         throw new Error(`Unexpected Error: ${error}`);
       }
     }
-    
   };
 
   return {

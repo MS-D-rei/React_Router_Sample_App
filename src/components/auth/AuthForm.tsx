@@ -1,5 +1,8 @@
 import { useAppDispatch, useAppSelector } from '@/hooks/store-hooks';
-import { setEmail, setPassword } from '@/store/authSlice';
+import {
+  setEmail,
+  setPassword,
+} from '@/store/authSlice';
 import React, { useState } from 'react';
 import {
   AuthFormActionsDiv,
@@ -29,13 +32,13 @@ export default function AuthForm() {
 
   const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+
     if (isLogin) {
       sendSignInRequest(authState.email, authState.password);
     } else {
       sendSignUpRequest(authState.email, authState.password);
     }
-    
+
     console.log(authState);
   };
 
@@ -67,7 +70,7 @@ export default function AuthForm() {
           {isLoading ? (
             <p>Sending request...</p>
           ) : (
-            <AuthFormButton>
+            <AuthFormButton type='submit'>
               {isLogin ? 'Login' : 'Create Account'}
             </AuthFormButton>
           )}

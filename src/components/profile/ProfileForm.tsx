@@ -18,7 +18,6 @@ export default function ProfileForm() {
     const enteredPassword = newPasswordRef.current?.value as string;
     // add validation
     sendChangePasswordRequest(auth.idToken, enteredPassword);
-    redirect('/auth');
   };
 
   return (

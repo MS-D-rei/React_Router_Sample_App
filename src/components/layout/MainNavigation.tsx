@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import {
   MainNavigationHeader,
   MainNavigationLogoDiv,
@@ -10,10 +10,12 @@ import { logInOutToggle, removeToken } from '@/store/authSlice';
 function MainNavigation() {
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const logoutHandler = () => {
     dispatch(removeToken());
     dispatch(logInOutToggle());
+    navigate('/auth');
   }
 
   return (
